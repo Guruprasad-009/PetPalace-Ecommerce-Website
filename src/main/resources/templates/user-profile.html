@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | PetPalace</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #212529;
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            color: #ffc107 !important;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .navbar-brand i {
+            margin-right: 7px;
+        }
+
+        .welcome {
+            color: white;
+        }
+
+        .welcome i {
+            color: #ffc107;
+        }
+
+        /* PROFILE HERO */
+
+        .profile-wrapper {
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        .profile-card {
+            border: none;
+            border-radius: 22px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, .12);
+        }
+
+        .profile-top {
+            background: linear-gradient(135deg, #212529, #343a40);
+            padding: 40px;
+            color: white;
+        }
+
+        .profile-avatar {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            background: #ffc107;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            margin: auto;
+            border: 5px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+        }
+
+        .profile-name {
+            font-weight: 700;
+            margin-top: 18px;
+        }
+
+        .profile-email {
+            color: #ced4da;
+        }
+
+        /* BODY */
+
+        .profile-body {
+            padding: 35px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .section-title i {
+            color: #ffc107;
+        }
+
+        /* INFO CARDS */
+
+        .info-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            height: 100%;
+            transition: all .3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .09);
+            background: #fff;
+            border-color: #ffc107;
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            background: #ffc107;
+            color: #212529;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: #212529;
+            font-size: 16px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        /* PASSWORD */
+
+        .password-card {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .password-icon {
+            width: 48px;
+            height: 48px;
+            background: #212529;
+            color: #ffc107;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        /* ACTION BUTTONS */
+
+        .action-area {
+            border-top: 1px solid #e9ecef;
+            margin-top: 35px;
+            padding-top: 30px;
+        }
+
+        .action-btn {
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 600;
+        }
+
+        /* ORDERS */
+
+        .orders-box {
+            margin-top: 30px;
+            background: #212529;
+            color: white;
+            border-radius: 17px;
+            padding: 25px;
+        }
+
+        .orders-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: #ffc107;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .orders-box h4 {
+            font-weight: 700;
+        }
+
+        .orders-box p {
+            color: #ced4da;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #212529;
+            color: white;
+            padding: 25px 0;
+            margin-top: 50px;
+        }
+
+        footer h5 {
+            color: #ffc107;
+            font-weight: 700;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .welcome {
+                display: none;
+            }
+
+            .profile-wrapper {
+                margin: 25px 15px;
+            }
+
+            .profile-top {
+                padding: 30px 20px;
+            }
+
+            .profile-body {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand"
+           th:href="@{/user-dashboard}">
+
+            <i class="bi bi-shop"></i>
+
+            PetPalace
+
+        </a>
+
+
+        <div class="d-flex align-items-center gap-2">
+
+            <span class="welcome">
+
+                <i class="bi bi-person-circle"></i>
+
+                Welcome,
+
+                <b th:text="${session.loggedInUser.fullname}"></b>
+
+            </span>
+
+
+            <a th:href="@{/my-cart}"
+               class="btn btn-warning ms-3">
+
+                <i class="bi bi-cart-fill"></i>
+
+            </a>
+
+
+            <a th:href="@{/logout}"
+               class="btn btn-danger">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PROFILE ================= -->
+
+<div class="container profile-wrapper">
+
+    <div class="profile-card">
+
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-top text-center">
+
+            <div class="profile-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+            <h2 class="profile-name"
+                th:text="${user.fullname}">
+            </h2>
+
+            <div class="profile-email">
+
+                <i class="bi bi-envelope"></i>
+
+                <span th:text="${user.email}"></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE BODY -->
+
+        <div class="profile-body">
+
+
+            <!-- ACCOUNT INFORMATION -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h4 class="section-title mb-0">
+
+                    <i class="bi bi-person-vcard-fill"></i>
+
+                    Account Information
+
+                </h4>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- NAME -->
+
+                <div class="col-md-6">
+
+                    <div class="info-card">
+
+                        <div class="info-icon">
+
+                            <i class="bi bi-person-fill"></i>
+
+                        </div>
+
+                        <div class="info-label">
+                            FULL NAME
+                        </div>
+
+                        <div class="info-value"
+                             th:text="${user.fullname}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="col-md-6">
+
+                    <div class="info-card">
+
+                        <div class="info-icon">
+
+                            <i class="bi bi-envelope-fill"></i>
+
+                        </div>
+
+                        <div class="info-label">
+                            EMAIL ADDRESS
+                        </div>
+
+                        <div class="info-value"
+                             th:text="${user.email}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MOBILE -->
+
+                <div class="col-md-6">
+
+                    <div class="info-card">
+
+                        <div class="info-icon">
+
+                            <i class="bi bi-phone-fill"></i>
+
+                        </div>
+
+                        <div class="info-label">
+                            MOBILE NUMBER
+                        </div>
+
+                        <div class="info-value"
+                             th:text="${user.mobile}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="col-md-6">
+
+                    <div class="info-card">
+
+                        <div class="info-icon">
+
+                            <i class="bi bi-geo-alt-fill"></i>
+
+                        </div>
+
+                        <div class="info-label">
+                            ADDRESS
+                        </div>
+
+                        <div class="info-value">
+
+                            <span th:if="${user.address != null and !#strings.isEmpty(user.address)}"
+                                  th:text="${user.address}">
+                            </span>
+
+                            <span th:if="${user.address == null or #strings.isEmpty(user.address)}"
+                                  class="text-muted">
+
+                                Address not added
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="mt-4">
+
+                <div class="password-card">
+
+                    <div class="d-flex align-items-center">
+
+                        <div class="password-icon me-3">
+
+                            <i class="bi bi-shield-lock-fill"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="info-label">
+                                CURRENT PASSWORD
+                            </div>
+
+                            <div class="info-value">
+
+                                ••••••••••••
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION AREA -->
+
+            <div class="action-area">
+
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+
+                    <a th:href="@{/edit-profile}"
+                       class="btn btn-warning action-btn">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                        Edit Profile
+
+                    </a>
+       
+                    <a th:href="@{/user-dashboard}"
+                       class="btn btn-secondary action-btn">
+
+                        <i class="bi bi-house-fill"></i>
+
+                        Home
+
+                    </a>
+                    
+                    <a th:href="@{/my-orders}"
+                           class="btn btn-warning action-btn">
+
+                            <i class="bi bi-arrow-right-circle-fill"></i>
+
+                            View Orders
+
+                        </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- MY ORDERS -->
+
+            <div class="orders-box">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-auto mb-3 mb-md-0">
+
+                        <div class="orders-icon">
+
+                            <i class="bi bi-box-seam-fill"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col">
+
+                        <h4>
+                            My Orders
+                        </h4>
+
+                        <p class="mb-0">
+
+                            Check your previous purchases,
+                            order details and order status.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-auto mt-3 mt-md-0">
+
+                        <a th:href="@{/my-orders}"
+                           class="btn btn-warning action-btn">
+
+                            <i class="bi bi-arrow-right-circle-fill"></i>
+
+                            View Orders
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container text-center">
+
+        <h5>
+
+            <i class="bi bi-shop"></i>
+
+            PetPalace
+
+        </h5>
+
+        <p class="mb-0">
+
+            © 2026 PetPalace. All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

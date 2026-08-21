@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About Us | PetPalace</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap Icons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+
+	<style>
+		* {
+			font-family: 'Poppins', sans-serif;
+		}
+
+		body {
+			background: #f8f9fa;
+		}
+
+		.navbar {
+			box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+		}
+
+		.page-banner {
+			background: linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
+				url("https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1600&q=80");
+			background-size: cover;
+			background-position: center;
+			height: 300px;
+			color: white;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.section-title {
+			font-weight: 700;
+			margin-bottom: 20px;
+		}
+
+		.icon-box {
+			transition: .3s;
+			border: none;
+		}
+
+		.icon-box:hover {
+			transform: translateY(-8px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
+		}
+
+		.team-card {
+			transition: .3s;
+		}
+
+		.team-card:hover {
+			transform: translateY(-8px);
+		}
+
+		footer {
+			background: #212529;
+			color: white;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- Navbar -->
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container">
+
+			<a class="navbar-brand fw-bold fs-3 text-warning" href="#">
+				<i class="bi bi-shop"></i> PetPalace
+			</a>
+
+			<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="menu">
+
+				<ul class="navbar-nav mx-auto">
+
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{/}">Home</a>
+					</li>
+
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/about}">About</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/contact}">Contact</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/login}">
+							Login
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/user/register}">
+							Register
+						</a>
+					</li>
+
+
+				</ul>
+
+				<a th:href="@{/wishlist}" class="btn btn-outline-light me-2">
+					<i class="bi bi-heart"></i>
+				</a>
+
+				<a th:href="@{/my-cart}" class="btn btn-warning">
+					<i class="bi bi-cart-fill"></i>
+				</a>
+
+
+			</div>
+
+		</div>
+	</nav>
+
+	<!-- Banner -->
+
+	<section class="page-banner">
+		<div>
+			<h1 class="display-4 fw-bold">About PetPalace</h1>
+			<p>Your One-Stop Destination for Happy & Healthy Pets</p>
+		</div>
+	</section>
+
+	<!-- About -->
+
+	<section class="container py-5">
+
+		<div class="row align-items-center">
+
+			<div class="col-lg-6">
+
+				<img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+					class="img-fluid rounded shadow">
+
+			</div>
+
+			<div class="col-lg-6">
+
+				<h2 class="section-title">Who We Are</h2>
+
+				<p class="text-muted">
+					Welcome to <strong>PetPalace</strong>, your trusted online pet store dedicated to providing
+					everything your furry friends need. Whether you're a proud dog owner, cat lover, bird enthusiast, or
+					fish keeper, we have a wide range of premium products to keep your pets happy and healthy.
+				</p>
+
+				<p class="text-muted">
+					From nutritious pet food and fun toys to grooming essentials and stylish accessories, PetPalace
+					offers quality products from trusted brands at affordable prices.
+				</p>
+
+				<a th:href="@{/user-dashboard}" class="btn btn-warning mt-3">
+					Shop Now
+				</a>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- Mission -->
+
+	<section class="bg-white py-5">
+
+		<div class="container">
+
+			<div class="text-center mb-5">
+
+				<h2 class="section-title">Our Mission</h2>
+
+				<p class="text-muted">
+					Making Pet Parenting Easy, Affordable & Enjoyable.
+				</p>
+
+			</div>
+
+			<div class="row g-4">
+
+				<div class="col-md-4">
+
+					<div class="card p-4 text-center icon-box">
+
+						<i class="bi bi-heart-fill text-danger display-4"></i>
+
+						<h4 class="mt-3">Love for Pets</h4>
+
+						<p>
+							Every product is carefully selected to ensure comfort, safety, and happiness for your pets.
+						</p>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<div class="card p-4 text-center icon-box">
+
+						<i class="bi bi-award-fill text-warning display-4"></i>
+
+						<h4 class="mt-3">Premium Quality</h4>
+
+						<p>
+							We offer only genuine and trusted brands with the highest quality standards.
+						</p>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<div class="card p-4 text-center icon-box">
+
+						<i class="bi bi-truck text-primary display-4"></i>
+
+						<h4 class="mt-3">Fast Delivery</h4>
+
+						<p>
+							Quick and secure delivery across India with hassle-free shopping experience.
+						</p>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- Why Choose -->
+
+	<section class="container py-5">
+
+		<div class="text-center mb-5">
+
+			<h2 class="section-title">
+				Why Choose PetPalace?
+			</h2>
+
+		</div>
+
+		<div class="row text-center">
+
+			<div class="col-md-3">
+
+				<i class="bi bi-box-seam display-4 text-success"></i>
+
+				<h5 class="mt-3">5000+ Products</h5>
+
+			</div>
+
+			<div class="col-md-3">
+
+				<i class="bi bi-people-fill display-4 text-primary"></i>
+
+				<h5 class="mt-3">10,000+ Customers</h5>
+
+			</div>
+
+			<div class="col-md-3">
+
+				<i class="bi bi-shield-check display-4 text-warning"></i>
+
+				<h5 class="mt-3">Secure Shopping</h5>
+
+			</div>
+
+			<div class="col-md-3">
+
+				<i class="bi bi-star-fill display-4 text-danger"></i>
+
+				<h5 class="mt-3">Top Rated Store</h5>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- Team -->
+
+	<section class="bg-light py-5">
+
+		<div class="container">
+
+			<div class="text-center mb-5">
+
+				<h2 class="section-title">
+					Meet Our Team
+				</h2>
+
+			</div>
+
+			<div class="row g-4">
+
+				<div class="col-md-4">
+
+					<div class="card team-card shadow">
+
+						<img src="https://randomuser.me/api/portraits/men/32.jpg" class="card-img-top">
+
+						<div class="card-body text-center">
+
+							<h5>Rahul Sharma</h5>
+
+							<p class="text-muted">Founder & CEO</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<div class="card team-card shadow">
+
+						<img src="https://randomuser.me/api/portraits/women/45.jpg" class="card-img-top">
+
+						<div class="card-body text-center">
+
+							<h5>Priya Patel</h5>
+
+							<p class="text-muted">Customer Support</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<div class="card team-card shadow">
+
+						<img src="https://randomuser.me/api/portraits/men/52.jpg" class="card-img-top">
+
+						<div class="card-body text-center">
+
+							<h5>Amit Verma</h5>
+
+							<p class="text-muted">Operations Manager</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+	<!-- Footer -->
+
+	<footer class="py-5">
+
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-md-4">
+
+					<h3 class="text-warning">PetPalace</h3>
+
+					<p>
+						Your trusted destination for pet food, toys, grooming products, and accessories.
+					</p>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<h5>Quick Links</h5>
+
+					<ul class="list-unstyled">
+
+						<li><a th:href="@{/}" class="text-white text-decoration-none">Home</a></li>
+						<li><a th:href="@{/about}" class="text-white text-decoration-none">About</a></li>
+						<li><a th:href="@{/user-dashboard}" class="text-white text-decoration-none">Shop</a></li>
+						<li><a th:href="@{/contact}" class="text-white text-decoration-none">Contact</a></li>
+
+					</ul>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<h5>Follow Us</h5>
+
+					<i class="bi bi-facebook fs-3 me-3"></i>
+					<i class="bi bi-instagram fs-3 me-3"></i>
+					<i class="bi bi-twitter-x fs-3 me-3"></i>
+					<i class="bi bi-youtube fs-3"></i>
+
+				</div>
+
+			</div>
+
+			<hr>
+
+			<p class="text-center mb-0">
+				© 2026 PetPalace. All Rights Reserved.
+			</p>
+
+		</div>
+
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

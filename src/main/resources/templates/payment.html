@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Payment | PetPalace</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+
+	<style>
+		body {
+			background: #f5f6fa;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		.navbar {
+			background: #212529;
+		}
+
+		.navbar-brand {
+			color: #ffc107 !important;
+			font-size: 30px;
+			font-weight: 700;
+		}
+
+		.payment-card {
+
+			border: 2px solid #dee2e6;
+			border-radius: 15px;
+			cursor: pointer;
+			transition: .3s;
+			padding: 20px;
+		}
+
+		.payment-card:hover {
+
+			border-color: #ffc107;
+			transform: translateY(-4px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, .12);
+
+		}
+
+		.payment-card.active {
+
+			border-color: #ffc107;
+			background: #fff8e1;
+
+		}
+
+		.payment-card input {
+
+			transform: scale(1.3);
+
+		}
+
+		.summary-card {
+
+			border: none;
+			border-radius: 18px;
+
+		}
+
+		.pay-btn {
+
+			font-size: 20px;
+			font-weight: 600;
+			padding: 14px;
+
+		}
+
+		.badge-box {
+
+			border-radius: 12px;
+			background: #f8f9fa;
+			padding: 15px;
+
+		}
+
+		footer {
+
+			background: #212529;
+			color: white;
+
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark shadow">
+
+		<div class="container">
+
+			<a class="navbar-brand" href="#">
+
+				<i class="bi bi-shop"></i>
+
+				PetPalace
+
+			</a>
+
+			<div class="ms-auto">
+
+				<span class="text-white">
+
+					<i class="bi bi-person-circle text-warning"></i>
+
+					Welcome,
+
+					<b th:text="${session.loggedInUser.fullname}"></b>
+
+				</span>
+
+			</div>
+
+		</div>
+
+	</nav>
+
+	<div class="container py-5">
+
+		<div class="row g-4">
+
+			<div class="col-lg-8">
+
+				<div class="card shadow-lg border-0 rounded-4">
+
+					<div class="card-header bg-dark text-warning text-center rounded-top-4">
+
+						<h3>
+
+							<i class="bi bi-credit-card-fill"></i>
+
+							Secure Payment
+
+						</h3>
+
+					</div>
+
+					<div class="card-body">
+
+						<form th:action="@{/place-order}" method="post">
+
+							<div class="payment-card active mb-3">
+
+								<div class="d-flex justify-content-between align-items-center">
+
+									<div>
+
+										<h5>
+
+											💵 Cash On Delivery
+
+										</h5>
+
+										<small class="text-muted">
+
+											Pay when your order arrives.
+
+										</small>
+
+									</div>
+
+									<input class="form-check-input"
+       type="radio"
+       name="paymentMethod"
+       id="cod"
+       value="Cash On Delivery"
+       checked>
+
+								</div>
+
+							</div>
+
+							<div class="payment-card mb-3">
+
+								<div class="d-flex justify-content-between align-items-center">
+
+									<div>
+
+										<h5>
+
+											📱 UPI Payment
+
+										</h5>
+
+										<small class="text-muted">
+
+											Google Pay, PhonePe, Paytm
+
+										</small>
+
+									</div>
+
+									<input class="form-check-input"
+       type="radio"
+       name="paymentMethod"
+       id="upi"
+       value="UPI">
+
+								</div>
+
+							</div>
+
+							<div class="payment-card mb-3">
+
+								<div class="d-flex justify-content-between align-items-center">
+
+									<div>
+
+										<h5>
+
+											💳 Debit / Credit Card
+
+										</h5>
+
+										<small class="text-muted">
+
+											Visa, MasterCard, RuPay
+
+										</small>
+
+									</div>
+
+									<input class="form-check-input"
+       type="radio"
+       name="paymentMethod"
+       id="card"
+       value="Debit/Credit Card">
+
+								</div>
+
+							</div>
+
+							
+							<button type="submit" class="btn btn-success w-100 pay-btn">
+
+								<i class="bi bi-shield-check"></i>
+
+								Pay Now
+
+							</button>
+
+							<a th:href="@{/checkout}" class="btn btn-secondary w-100 mt-3">
+
+								<i class="bi bi-arrow-left"></i>
+
+								Back To Checkout
+
+							</a>
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="col-lg-4">
+
+				<div class="card shadow summary-card">
+
+					<div class="card-body">
+
+						<h4 class="mb-4">
+
+							📦 Order Summary
+
+						</h4>
+
+						<div class="badge-box mb-3">
+
+							<h6 class="text-muted">
+
+								Grand Total
+
+							</h6>
+
+							<h2 class="text-success">
+
+								₹ <span th:text="${grandTotal}"></span>
+
+							</h2>
+
+						</div>
+
+						<div class="badge-box mb-3">
+
+							<h6>
+
+								🔒 100% Secure Checkout
+
+							</h6>
+
+						</div>
+
+						<div class="badge-box mb-3">
+
+							<h6>
+
+								🚚 Fast Delivery
+
+							</h6>
+
+						</div>
+
+						<div class="badge-box">
+
+							<h6>
+
+								🛡 Trusted Pet Store
+
+							</h6>
+
+						</div>
+
+						<hr>
+
+						<div class="text-center">
+
+							<i class="bi bi-patch-check-fill text-success fs-1"></i>
+
+							<p class="mt-2 text-muted">
+
+								Your payment information is protected with industry-standard security.
+
+							</p>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<footer class="py-4 mt-5">
+
+		<div class="container text-center">
+
+			<h5>
+
+				<i class="bi bi-shop text-warning"></i>
+
+				PetPalace
+
+			</h5>
+
+			<p class="mb-0">
+
+				© 2026 PetPalace. All Rights Reserved.
+
+			</p>
+
+		</div>
+
+	</footer>
+	
+	<script>
+
+const cards = document.querySelectorAll(".payment-card");
+const cod = document.getElementById("cod");
+const upi = document.getElementById("upi");
+const card = document.getElementById("card");
+
+cards.forEach(function(paymentCard){
+
+    paymentCard.addEventListener("click", function(){
+
+        let radio = paymentCard.querySelector("input");
+
+        if(radio.id === "upi"){
+
+            alert("⚠ UPI Payment is currently under construction.\n\nPlease use Cash On Delivery.");
+
+            cod.checked = true;
+
+            cards.forEach(c => c.classList.remove("active"));
+            document.getElementById("cod").closest(".payment-card").classList.add("active");
+
+            return;
+        }
+
+        if(radio.id === "card"){
+
+            alert("⚠ Debit/Credit Card Payment is currently under construction.\n\nPlease use Cash On Delivery.");
+
+            cod.checked = true;
+
+            cards.forEach(c => c.classList.remove("active"));
+            document.getElementById("cod").closest(".payment-card").classList.add("active");
+
+            return;
+        }
+
+        cards.forEach(c => c.classList.remove("active"));
+
+        paymentCard.classList.add("active");
+
+        radio.checked = true;
+
+    });
+
+});
+
+</script>
+</body>
+
+</html>

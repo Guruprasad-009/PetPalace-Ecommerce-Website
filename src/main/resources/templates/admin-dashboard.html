@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Admin Dashboard | PetPalace</title>
+
+	<!-- Bootstrap 5 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Bootstrap Icons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+
+	<style>
+		/* ================= BODY ================= */
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			background: #f4f6f9;
+			font-family: 'Poppins', sans-serif;
+			margin: 0;
+		}
+
+		.dashboard-wrapper {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.dashboard-body {
+			flex: 1;
+		}
+
+
+		/* ================= NAVBAR ================= */
+
+		.navbar {
+			background: #212529 !important;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+			min-height: 76px;
+		}
+
+		.navbar-brand {
+			color: #ffc107 !important;
+			font-size: 30px;
+			font-weight: 700;
+		}
+
+
+		/* ================= SIDEBAR ================= */
+
+		.sidebar-wrapper {
+			background: #212529;
+			min-height: 100%;
+			height: 100%;
+		}
+
+		.sidebar {
+			background: #212529;
+			min-height: 100%;
+			padding: 25px 15px;
+		}
+
+		.sidebar-title {
+			color: #ffc107;
+			font-size: 20px;
+			font-weight: 700;
+			padding: 10px 15px;
+			margin-bottom: 15px;
+		}
+
+		.sidebar .nav-link {
+			color: #ffffff;
+			padding: 13px 15px;
+			margin-bottom: 8px;
+			border-radius: 10px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		.sidebar .nav-link:hover,
+		.sidebar .nav-link.active {
+			background: #ffc107;
+			color: #212529;
+			transform: translateX(4px);
+		}
+
+		.sidebar .nav-link i {
+			margin-right: 10px;
+			font-size: 17px;
+		}
+
+		/* ================= MAIN CONTENT ================= */
+
+		.main-content {
+			padding: 30px 35px 35px;
+		}
+
+		.dashboard-title {
+			color: #212529;
+			font-weight: 700;
+		}
+
+		.dashboard-subtitle {
+			color: #6c757d;
+		}
+
+
+		/* ================= STAT CARDS ================= */
+
+		.stat-card {
+			border: none;
+			border-radius: 18px;
+			box-shadow: 0 8px 20px rgba(0, 0, 0, .10);
+			transition: 0.3s;
+			overflow: hidden;
+		}
+
+		.stat-card:hover {
+			transform: translateY(-5px);
+		}
+
+		.stat-icon {
+			width: 65px;
+			height: 65px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 16px;
+			font-size: 30px;
+		}
+
+		.icon-yellow {
+			background: #fff3cd;
+			color: #d39e00;
+		}
+
+		.icon-green {
+			background: #d1e7dd;
+			color: #198754;
+		}
+
+		.icon-blue {
+			background: #cfe2ff;
+			color: #0d6efd;
+		}
+
+		.icon-red {
+			background: #f8d7da;
+			color: #dc3545;
+		}
+
+		.stat-number {
+			font-size: 28px;
+			font-weight: 700;
+			color: #212529;
+		}
+
+		.stat-label {
+			color: #6c757d;
+			font-size: 15px;
+		}
+
+
+		/* ================= QUICK ACTIONS ================= */
+
+		.section-title {
+			color: #212529;
+			font-weight: 700;
+			margin-bottom: 18px;
+		}
+
+		.quick-action {
+			border: none;
+			border-radius: 15px;
+			padding: 25px 20px;
+			box-shadow: 0 6px 18px rgba(0, 0, 0, .10);
+			transition: 0.3s;
+			text-decoration: none;
+			display: block;
+			min-height: 190px;
+		}
+
+		.quick-action:hover {
+			transform: translateY(-6px);
+			box-shadow: 0 12px 25px rgba(0, 0, 0, .15);
+		}
+
+		.quick-action i {
+			font-size: 35px;
+		}
+
+
+		/* ================= SALES SUMMARY ================= */
+
+		.sales-section {
+			margin-top: 15px;
+		}
+
+
+		/* ================= FOOTER ================= */
+
+		.admin-footer {
+			background: #212529;
+			color: white;
+			width: 100%;
+			margin-top: auto;
+		}
+
+		.admin-footer h5 {
+			color: #ffc107;
+			font-weight: 600;
+			margin-bottom: 8px;
+		}
+
+		.admin-footer p {
+			margin: 0;
+			color: #f8f9fa;
+		}
+
+
+		/* ================= MOBILE ================= */
+
+
+			@media (max-width: 991px) {
+
+	.sidebar-wrapper {
+		min-height: auto;
+	}
+
+	.sidebar {
+		min-height: auto;
+	}
+
+	.main-content {
+		padding: 25px 15px 30px;
+	}
+
+	.navbar-brand {
+		font-size: 25px;
+	}
+
+
+			}
+
+		
+	</style>
+
+</head>
+
+
+<body>
+
+	<div class="dashboard-wrapper">
+
+
+		<!-- ================================================= -->
+		<!-- NAVBAR -->
+		<!-- ================================================= -->
+
+		<nav class="navbar navbar-expand-lg navbar-dark">
+
+			<div class="container-fluid">
+
+				<a class="navbar-brand" th:href="@{/admin-dashboard}">
+
+					<i class="bi bi-shop"></i>
+
+					PetPalace
+
+				</a>
+
+
+				<button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
+					data-bs-target="#adminNavbar">
+
+					<span class="navbar-toggler-icon"></span>
+
+				</button>
+
+				<div class="collapse navbar-collapse" id="adminNavbar">
+
+					<div class="ms-auto d-flex align-items-center gap-3">
+
+						<span class="text-white">
+
+							<i class="bi bi-person-circle text-warning"></i>
+
+							Welcome,
+
+							<b th:text="${session.loggedInUser.fullname}">
+								Admin
+							</b>
+
+						</span>
+
+
+						<a th:href="@{/logout}" class="btn btn-danger">
+
+							<i class="bi bi-box-arrow-right"></i>
+
+							Logout
+
+						</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</nav>
+
+
+
+		<!-- ================================================= -->
+		<!-- DASHBOARD BODY -->
+		<!-- ================================================= -->
+
+		<div class="container-fluid dashboard-body p-0">
+
+			<div class="row g-0 align-items-stretch">
+
+
+				<!-- ================================================= -->
+				<!-- SIDEBAR -->
+				<!-- ================================================= -->
+
+				<div class="col-lg-2 sidebar-wrapper">
+
+					<div class="sidebar">
+
+						<div class="sidebar-title">
+
+							<i class="bi bi-speedometer2"></i>
+
+							Admin Panel
+
+						</div>
+
+
+						<ul class="nav flex-column mt-3">
+
+
+							<li class="nav-item">
+
+								<a class="nav-link active" th:href="@{/admin-dashboard}">
+
+									<i class="bi bi-grid-fill"></i>
+
+									Dashboard
+
+								</a>
+
+							</li>
+
+
+							<li class="nav-item">
+
+								<a class="nav-link" th:href="@{/add-product}">
+
+									<i class="bi bi-plus-circle-fill"></i>
+
+									Add Product
+
+								</a>
+
+							</li>
+
+
+							<li class="nav-item">
+
+								<a class="nav-link" th:href="@{/view-products}">
+
+									<i class="bi bi-box-seam-fill"></i>
+
+									Manage Products
+
+								</a>
+
+							</li>
+
+
+							<li class="nav-item">
+
+								<a class="nav-link" th:href="@{/view-orders}">
+
+									<i class="bi bi-bag-check-fill"></i>
+
+									Orders
+
+								</a>
+
+							</li>
+
+
+							<li class="nav-item">
+
+								<a class="nav-link" th:href="@{/view-users}">
+
+									<i class="bi bi-people-fill"></i>
+
+									Users
+
+								</a>
+
+							</li>
+
+
+							<li class="nav-item">
+
+								<a class="nav-link" th:href="@{/user-dashboard}">
+
+									<i class="bi bi-shop-window"></i>
+
+									View Store
+
+								</a>
+
+							</li>
+
+
+						</ul>
+
+					</div>
+
+				</div>
+
+
+
+				<!-- ================================================= -->
+				<!-- MAIN CONTENT -->
+				<!-- ================================================= -->
+
+				<div class="col-lg-10">
+
+					<main class="main-content">
+
+
+						<!-- ================= HEADING ================= -->
+
+						<div class="d-flex justify-content-between
+								align-items-center
+								flex-wrap
+								gap-3
+								mb-4">
+
+							<div>
+
+								<h2 class="dashboard-title">
+
+									Admin Dashboard
+
+								</h2>
+
+								<p class="dashboard-subtitle mb-0">
+
+									Manage your PetPalace store from one place.
+
+								</p>
+
+							</div>
+
+
+							<a th:href="@{/add-product}" class="btn btn-warning fw-bold">
+
+								<i class="bi bi-plus-circle-fill"></i>
+
+								Add New Product
+
+							</a>
+
+						</div>
+
+
+
+						<!-- ================================================= -->
+						<!-- STATISTICS -->
+						<!-- ================================================= -->
+
+						<div class="row g-4 mb-5">
+
+
+							<!-- Total Products -->
+
+							<div class="col-xl-3 col-md-6">
+
+								<div class="card stat-card h-100">
+
+									<div class="card-body d-flex
+											align-items-center
+											justify-content-between">
+
+										<div>
+
+											<div class="stat-label">
+												Total Products
+											</div>
+
+											<div class="stat-number" th:text="${totalProducts}">
+												0
+											</div>
+
+										</div>
+
+
+										<div class="stat-icon icon-yellow">
+
+											<i class="bi bi-box-seam-fill"></i>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+
+							<!-- Total Users -->
+
+							<div class="col-xl-3 col-md-6">
+
+								<div class="card stat-card h-100">
+
+									<div class="card-body d-flex
+											align-items-center
+											justify-content-between">
+
+										<div>
+
+											<div class="stat-label">
+												Total Users
+											</div>
+
+											<div class="stat-number" th:text="${totalUsers}">
+												0
+											</div>
+
+										</div>
+
+
+										<div class="stat-icon icon-blue">
+
+											<i class="bi bi-people-fill"></i>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+
+							<!-- Total Orders -->
+
+							<div class="col-xl-3 col-md-6">
+
+								<div class="card stat-card h-100">
+
+									<div class="card-body d-flex
+											align-items-center
+											justify-content-between">
+
+										<div>
+
+											<div class="stat-label">
+												Total Orders
+											</div>
+
+											<div class="stat-number" th:text="${orderCount}">
+												0
+											</div>
+
+										</div>
+
+
+										<div class="stat-icon icon-green">
+
+											<i class="bi bi-bag-check-fill"></i>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+
+
+							<!-- Out Of Stock -->
+
+							<div class="col-xl-3 col-md-6">
+
+								<div class="card stat-card h-100">
+
+									<div class="card-body d-flex
+											align-items-center
+											justify-content-between">
+
+										<div>
+
+											<div class="stat-label">
+												Out Of Stock
+											</div>
+
+											<div class="stat-number" th:text="${outOfStockCount}">
+												0
+											</div>
+
+										</div>
+
+
+										<div class="stat-icon icon-red">
+
+											<i class="bi bi-exclamation-triangle-fill"></i>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+
+
+						<!-- ================================================= -->
+						<!-- QUICK ACTIONS -->
+						<!-- ================================================= -->
+
+						<div class="mb-5">
+
+							<h4 class="section-title">
+
+								<i class="bi bi-lightning-charge-fill text-warning"></i>
+
+								Quick Actions
+
+							</h4>
+
+
+							<div class="row g-4">
+
+
+								<!-- Add Product -->
+
+								<div class="col-lg-4 col-md-6">
+
+									<a th:href="@{/add-product}" class="quick-action
+										  bg-warning
+										  text-dark
+										  text-center
+										  h-100">
+
+										<i class="bi bi-plus-square-fill"></i>
+
+										<h5 class="fw-bold mt-3">
+											Add Product
+										</h5>
+
+										<p class="mb-0">
+											Add a new pet product.
+										</p>
+
+									</a>
+
+								</div>
+
+
+
+								<!-- Manage Products -->
+
+								<div class="col-lg-4 col-md-6">
+
+									<a th:href="@{/view-products}" class="quick-action
+										  bg-dark
+										  text-white
+										  text-center
+										  h-100">
+
+										<i class="bi bi-pencil-square text-warning"></i>
+
+										<h5 class="fw-bold mt-3">
+											Manage Products
+										</h5>
+
+										<p class="mb-0">
+											Edit or delete products.
+										</p>
+
+									</a>
+
+								</div>
+
+
+
+								<!-- View Orders -->
+
+								<div class="col-lg-4 col-md-6">
+
+									<a th:href="@{/view-orders}" class="quick-action
+										  bg-warning
+										  text-dark
+										  text-center
+										  h-100">
+
+										<i class="bi bi-bag-check-fill"></i>
+
+										<h5 class="fw-bold mt-3">
+											View Orders
+										</h5>
+
+										<p class="mb-0">
+											Check customer orders.
+										</p>
+
+									</a>
+
+								</div>
+
+
+							</div>
+
+						</div>
+
+
+
+						<!-- ================================================= -->
+						<!-- TODAY'S SALES SUMMARY -->
+						<!-- ================================================= -->
+
+						<div class="sales-section pb-4">
+
+
+							<h4 class="section-title">
+
+								<i class="bi bi-bar-chart-fill text-success"></i>
+
+								Today's Sales Summary
+
+							</h4>
+
+
+							<div class="row g-4">
+
+
+								<!-- Total Sales Today -->
+
+								<div class="col-lg-6">
+
+									<div class="card stat-card h-100">
+
+										<div class="card-body d-flex
+												justify-content-between
+												align-items-center">
+
+											<div>
+
+												<div class="stat-label">
+													Total Sales Today
+												</div>
+
+												<div class="stat-number text-primary" th:text="${todaySales}">
+													0
+												</div>
+
+												<small class="text-muted">
+													Orders placed today
+												</small>
+
+											</div>
+
+
+											<div class="stat-icon icon-blue">
+
+												<i class="bi bi-graph-up-arrow"></i>
+
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+
+
+								<!-- Total Amount Today -->
+
+								<div class="col-lg-6">
+
+									<div class="card stat-card h-100">
+
+										<div class="card-body d-flex
+												justify-content-between
+												align-items-center">
+
+											<div>
+
+												<div class="stat-label">
+													Total Amount Today
+												</div>
+
+												<div class="stat-number text-success">
+
+													₹<span th:text="${totalAmountToday}">
+														0
+													</span>
+
+												</div>
+
+												<small class="text-muted">
+													Today's Revenue
+												</small>
+
+											</div>
+
+
+											<div class="stat-icon icon-green">
+
+												<i class="bi bi-currency-rupee"></i>
+
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+
+							</div>
+
+						</div>
+
+
+					</main>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+		<!-- ================================================= -->
+		<!-- FOOTER -->
+		<!-- ================================================= -->
+
+		<footer class="admin-footer py-4">
+
+			<div class="container-fluid text-center">
+
+				<h5>
+
+					<i class="bi bi-shop text-warning"></i>
+
+					PetPalace Admin Panel
+
+				</h5>
+
+				<p>
+
+					© 2026 PetPalace. All Rights Reserved.
+
+				</p>
+
+			</div>
+
+		</footer>
+
+
+	</div>
+
+
+	<!-- Bootstrap JS -->
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>
