@@ -210,4 +210,4 @@ Through this project, I gained practical experience in:
 
 **Guruprasad Halde**
 
-Java Full Stack Developer | Java | Spring Boot | React.js | MySQL
+Java Full Stack Developer | Java | Spring Boot | MySQL
